@@ -43,6 +43,7 @@ namespace APIDevice.Controllers
                     MyData.Add(
                         new RawMetricModel()
                         {
+                            id = (int)dr["id"],
                             device_macaddress = (string)dr["device_macaddress"],
                             device_type = (int)dr["device_type"],
                             metric_date = (DateTime)dr["metric_date"],
@@ -57,7 +58,7 @@ namespace APIDevice.Controllers
             {
                 throw e;
             }
-            
+
         }
 
         // POST: api/RawMetric
@@ -80,7 +81,8 @@ namespace APIDevice.Controllers
                     MyCnx.Open();
                     MyCmd = new NpgsqlCommand(insert_request, MyCnx);
 
-                    //Définition  et ajout des paramètres 
+                    //Définition  et ajout des paramètres
+                    MyCmd.Parameters.Add(new NpgsqlParameter("id", NpgsqlDbType.Varchar)).Value = value.id;
                     MyCmd.Parameters.Add(new NpgsqlParameter("device_macaddress", NpgsqlDbType.Varchar)).Value = value.device_macaddress;
                     MyCmd.Parameters.Add(new NpgsqlParameter("metric_date", NpgsqlDbType.Timestamp)).Value = value.metric_date;
                     MyCmd.Parameters.Add(new NpgsqlParameter("device_type", NpgsqlDbType.Integer)).Value = value.device_type;
@@ -93,7 +95,7 @@ namespace APIDevice.Controllers
                     throw e;
                 }
             }
-            
+
         }
 
         // PUT: api/RawMetric/5

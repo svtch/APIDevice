@@ -7,6 +7,7 @@ namespace APIDevice.Models
 {
     public class RawMetricModel
     {
+        public int id;
         public string device_macaddress;
         public DateTime metric_date;
         public string metric_value;
