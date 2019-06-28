@@ -11,8 +11,5 @@ namespace APIDevice.Models
         public string name;
         public int devicetype_id;
 
-        public string Macaddress { get => macaddress; set => macaddress = value; }
-        public string Name { get => name; set => name = value; }
-        public int Devicetype_id { get => devicetype_id; set => devicetype_id = value; }
     }
 }

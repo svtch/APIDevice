@@ -26,10 +26,10 @@ namespace APIDevice.Controllers
         }
 
         // GET: api/RawMetric/?id=1223
-        public DataTable Get(int id)
+        public List<RawMetricModel> Get(int id)
         {
             string select_request = SharedVar.buildSelectRequest(id);
-            DataTable MyData = new DataTable();
+            List<RawMetricModel> MyData = new List<RawMetricModel>();
             NpgsqlDataAdapter da;
             try
             {
@@ -37,7 +37,19 @@ namespace APIDevice.Controllers
                 MyCnx.Open();
                 MyCmd = new NpgsqlCommand(select_request, MyCnx);
                 da = new NpgsqlDataAdapter(MyCmd);
-                da.Fill(MyData);
+                NpgsqlDataReader dr = MyCmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    MyData.Add(
+                        new RawMetricModel()
+                        {
+                            device_macaddress = (string)dr["device_macaddress"],
+                            device_type = (int)dr["device_type"],
+                            metric_date = (DateTime)dr["metric_date"],
+                            metric_value = (string)dr["metric_value"]
+                        }
+                    );
+                }
                 MyCnx.Close();
                 return MyData;
             }

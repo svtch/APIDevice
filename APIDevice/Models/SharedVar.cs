@@ -81,7 +81,7 @@ namespace APIDevice.Models
             }*/
             return "SELECT * " +
                     "FROM \"metrics\"" +
-                    " WHERE id > " +
+                    " WHERE Id > " +
                     "\'" + id + "\'";
         }
         public static string buildInsertRequest()
